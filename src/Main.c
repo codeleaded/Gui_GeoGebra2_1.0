@@ -6,10 +6,22 @@
 float lambda = 0.0f;
 TransformedView tv;
 
+float fn_g(float x){
+	return 2.0f * F32_Sigmoid(10.0f * x) - 1.0f;
+}
+float fn_f(float x){
+	return sinf(x);
+}
 float Function_1D(float x){
 	//return x * sinf(x);
 	//return F32_SMax(0.001f * x * x,sinf(x),lambda);
-	return expf(lambda * logf(x));
+	//return expf(lambda * logf(x));
+
+	float y = x;
+	for(int i = 0;i<=(int)floorf(lambda);i++){
+		y = fn_g(fn_f(y));
+	}
+	return y;
 }
 
 void Setup(AlxWindow* w){
